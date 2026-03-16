@@ -4,6 +4,7 @@ import {
   addCategory,
   deleteCategory,
   getCategories,
+  getCategoryById,
   updateCategory,
 } from "../handlers/category-handler.js";
 
@@ -15,9 +16,16 @@ router.post("/add", async (req, res) => {
   res.send(result);
 });
 
-// Get
+// Get all
 router.get("/get", async (req, res) => {
   let result = await getCategories();
+  res.send(result);
+});
+
+// Get by Id
+router.get("/get/:id", async (req, res) => {
+  let id = req.params["id"];
+  let result = await getCategoryById(id);
   res.send(result);
 });
 
