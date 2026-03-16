@@ -3,6 +3,7 @@ const router = express.Router();
 import {
   addCategory,
   deleteCategory,
+  getCategories,
   updateCategory,
 } from "../handlers/category-handler.js";
 
@@ -11,6 +12,12 @@ router.post("/add", async (req, res) => {
   console.log("here is category route");
   let model = req.body;
   let result = await addCategory(model);
+  res.send(result);
+});
+
+// Get
+router.get("/get", async (req, res) => {
+  let result = await getCategories();
   res.send(result);
 });
 
