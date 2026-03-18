@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import categoryRoutes from "./routes/category.js";
+import brandRoutes from "./routes/brand.js";
 import cors from "cors";
 
 const app = express();
@@ -11,6 +12,8 @@ app.use(express.json());
 
 app.use("/category", categoryRoutes);
 console.log("Category routes registered");
+app.use("/brand", brandRoutes);
+console.log("Brand routes registered");
 
 app.get("/", (req, res) => {
   res.send("Server running");
