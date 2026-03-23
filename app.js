@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import categoryRoutes from "./routes/category.js";
 import productRoutes from "./routes/product.js";
 import brandRoutes from "./routes/brand.js";
+import customerRoutes from "./routes/customer.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -22,6 +23,8 @@ app.use("/product", productRoutes);
 console.log("Product routes registered");
 app.use("/brand", brandRoutes);
 console.log("Brand routes registered");
+app.use("/customer", customerRoutes);
+console.log("Customer routes registered");
 
 app.get("/", (req, res) => {
   res.send("Server running");
