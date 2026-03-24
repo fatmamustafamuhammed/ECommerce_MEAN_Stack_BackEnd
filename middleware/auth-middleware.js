@@ -10,12 +10,23 @@ function verifyToken(req, res, next) {
   try {
     const decode = jwt.verify(token, "seceret");
     console.log(decode);
+    req.user = decode;
     next();
   } catch (err) {
-    return res.satus(401).send({
+    return res.status(401).send({
       error: "Invalid Token",
     });
   }
 }
 
-export { verifyToken };
+function isAdmin(req, res, next) {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    return res.status(403).send({
+      error: "Forbidden",
+    });
+  }
+}
+
+export { verifyToken, isAdmin };

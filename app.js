@@ -8,7 +8,7 @@ import authRoutes from "./routes/auth.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import { verifyToken } from "./middleware/auth-middleware.js";
+import { verifyToken, isAdmin } from "./middleware/auth-middleware.js";
 
 const app = express();
 const port = 3000;
@@ -19,13 +19,13 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use("/category", verifyToken, categoryRoutes);
+app.use("/category", verifyToken, isAdmin, categoryRoutes);
 console.log("Category routes registered");
-app.use("/product", productRoutes);
+app.use("/product", verifyToken, isAdmin, productRoutes);
 console.log("Product routes registered");
-app.use("/brand", brandRoutes);
+app.use("/brand", verifyToken, isAdmin, brandRoutes);
 console.log("Brand routes registered");
-app.use("/customer", customerRoutes);
+app.use("/customer", verifyToken, customerRoutes);
 console.log("Customer routes registered");
 app.use("/auth", authRoutes);
 console.log("Auth routes registered");
