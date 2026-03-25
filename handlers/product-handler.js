@@ -1,5 +1,5 @@
 import Product from "./../db/product.js";
-
+import mongoose from "mongoose";
 async function addProduct(model) {
   let product = new Product({
     ...model,
@@ -42,6 +42,14 @@ async function getFeaturedProducts() {
   return FeaturedProducts.map((x) => x.toObject());
 }
 
+function toObjectId(id) {
+  if (!id) return null;
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    return new mongoose.Types.ObjectId(id);
+  }
+  return null;
+}
+
 async function getProductForListing(
   searchTerm,
   categoryId,
@@ -73,17 +81,20 @@ async function getProductForListing(
     ];
   }
   if (categoryId) {
-    queryFilter.categoryId = categoryId;
+    const objectId = toObjectId(categoryId);
+    if (objectId) queryFilter.categoryId = objectId;
   }
+
   if (brandId) {
-    queryFilter.brandId = brandId;
+    const objectId = toObjectId(brandId);
+    if (objectId) queryFilter.brandId = objectId;
   }
   const products = await Product.find(queryFilter)
     .sort({
-      sortBy: sortOrder,
+      [sortBy]: +sortOrder,
     })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize);
+    .skip((+page - 1) * +pageSize)
+    .limit(+pageSize);
   return products.map((x) => x.toObject());
 }
 

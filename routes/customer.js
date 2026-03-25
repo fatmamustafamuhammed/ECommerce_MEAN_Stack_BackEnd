@@ -23,13 +23,16 @@ router.get("/categories", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  const { searchTerm, categoryId, brandId, sortBy, sortOrder } = req.query;
+  const { searchTerm, categoryId, brandId, sortBy, sortOrder, pageSize, page } =
+    req.query;
   const products = await getProductForListing(
     searchTerm,
     categoryId,
-    brandId,
+    page,
+    pageSize,
     sortBy,
     sortOrder,
+    brandId,
   );
   res.send(products);
 });
