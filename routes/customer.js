@@ -5,6 +5,7 @@ import {
   getProductForListing,
 } from "../handlers/product-handler.js";
 import { getCategories } from "../handlers/category-handler.js";
+import { getBrands } from "../handlers/brand-handler.js";
 const router = express.Router();
 
 router.get("/new-products", async (req, res) => {
@@ -22,17 +23,22 @@ router.get("/categories", async (req, res) => {
   res.send(categories);
 });
 
+router.get("/brands", async (req, res) => {
+  const brands = await getBrands();
+  res.send(brands);
+});
+
 router.get("/products", async (req, res) => {
   const { searchTerm, categoryId, brandId, sortBy, sortOrder, pageSize, page } =
     req.query;
   const products = await getProductForListing(
     searchTerm,
     categoryId,
+    brandId,
     page,
     pageSize,
     sortBy,
     sortOrder,
-    brandId,
   );
   res.send(products);
 });
