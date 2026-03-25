@@ -42,6 +42,51 @@ async function getFeaturedProducts() {
   return FeaturedProducts.map((x) => x.toObject());
 }
 
+async function getProductForListing(
+  searchTerm,
+  categoryId,
+  brandId,
+  page,
+  pageSize,
+  sortBy,
+  sortOrder,
+) {
+  if (!sortBy) {
+    sortBy = "price";
+  }
+  if (!sortOrder) {
+    sortOrder = -1;
+  }
+  let queryFilter = {};
+  if (searchTerm) {
+    // Like Operator in mongodb
+    // ?searchTerm=up
+    // queryFilter.name = { $regex: ".*" + searchTerm + ".*" };
+
+    queryFilter.$or = [
+      {
+        name: { $regex: ".*" + searchTerm + ".*" },
+      },
+      {
+        shortDescription: { $regex: ".*" + searchTerm + ".*" },
+      },
+    ];
+  }
+  if (categoryId) {
+    queryFilter.categoryId = categoryId;
+  }
+  if (brandId) {
+    queryFilter.brandId = brandId;
+  }
+  const products = await Product.find(queryFilter)
+    .sort({
+      sortBy: sortOrder,
+    })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
+  return products.map((x) => x.toObject());
+}
+
 export {
   addProduct,
   getProducts,
@@ -50,4 +95,5 @@ export {
   deleteProduct,
   getNewProducts,
   getFeaturedProducts,
+  getProductForListing,
 };
