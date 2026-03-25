@@ -3,6 +3,7 @@ import {
   getFeaturedProducts,
   getNewProducts,
   getProductForListing,
+  getProductById,
 } from "../handlers/product-handler.js";
 import { getCategories } from "../handlers/category-handler.js";
 import { getBrands } from "../handlers/brand-handler.js";
@@ -41,6 +42,13 @@ router.get("/products", async (req, res) => {
     sortOrder,
   );
   res.send(products);
+});
+
+// Get by Id
+router.get("/product/:id", async (req, res) => {
+  let id = req.params["id"];
+  let result = await getProductById(id);
+  res.send(result);
 });
 
 export default router;
