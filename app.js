@@ -4,6 +4,7 @@ import categoryRoutes from "./routes/category.js";
 import productRoutes from "./routes/product.js";
 import brandRoutes from "./routes/brand.js";
 import customerRoutes from "./routes/customer.js";
+import orderRoutes from "./routes/order.js";
 import authRoutes from "./routes/auth.js";
 import cors from "cors";
 import path from "path";
@@ -27,6 +28,8 @@ app.use("/brand", verifyToken, isAdmin, brandRoutes);
 console.log("Brand routes registered");
 app.use("/customer", verifyToken, customerRoutes);
 console.log("Customer routes registered");
+app.use("/orders", verifyToken, orderRoutes);
+console.log("orders routes registered");
 app.use("/auth", authRoutes);
 console.log("Auth routes registered");
 

@@ -23,7 +23,7 @@ async function addToCart(userId, productId, quantity) {
   }
 }
 
-async function removeFromCart(userId, productId, quantity) {
+async function removeFromCart(userId, productId) {
   await Cart.findOneAndDelete({ userId: userId, productId: productId });
 }
 
@@ -34,4 +34,10 @@ async function getCart(userId) {
   });
 }
 
-export { addToCart, removeFromCart, getCart };
+async function clearCart(userId) {
+  await Cart.deleteMany({
+    userId: userId,
+  });
+}
+
+export { addToCart, removeFromCart, getCart, clearCart };

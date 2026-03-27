@@ -17,6 +17,9 @@ import {
   addToCart,
   removeFromCart,
 } from "../handlers/shopping-cart-handler.js";
+import { addOrder, getCustomerOrder } from "../handlers/order-handler.js";
+import { clearCart } from "../handlers/shopping-cart-handler.js";
+
 const router = express.Router();
 
 router.get("/new-products", async (req, res) => {
@@ -100,12 +103,29 @@ router.post("/carts/:id", async (req, res) => {
   res.send(items);
 });
 
-router.delete("/carts/:id", async (req, res) => {
+router.post("/order", async (req, res) => {
   console.log(req.user);
   const userId = req.user.id;
-  const productId = req.params.id;
-  const items = await removeFromCart(userId, productId);
-  res.send(items);
+  const order = req.body;
+  await addOrder(userId, order);
+  await clearCart(userId);
+  return res.send({
+    message: "Order Created",
+  });
+});
+
+router.get("/order/get", async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const orders = await getCustomerOrder(userId);
+    return res.send(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return res.status(500).send({
+      message: "Failed to fetch orders",
+      error: error.message,
+    });
+  }
 });
 
 export default router;
