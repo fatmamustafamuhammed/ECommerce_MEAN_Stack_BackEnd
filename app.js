@@ -28,7 +28,7 @@ app.use("/brand", verifyToken, isAdmin, brandRoutes);
 console.log("Brand routes registered");
 app.use("/customer", verifyToken, customerRoutes);
 console.log("Customer routes registered");
-app.use("/orders", verifyToken, orderRoutes);
+app.use("/orders", verifyToken, isAdmin, orderRoutes);
 console.log("orders routes registered");
 app.use("/auth", authRoutes);
 console.log("Auth routes registered");

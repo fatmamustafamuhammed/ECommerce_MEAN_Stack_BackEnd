@@ -99,8 +99,31 @@ router.post("/carts/:id", async (req, res) => {
   const userId = req.user.id;
   const productId = req.params.id;
   const quantity = req.body.quantity;
-  const items = await addToCart(userId, productId, quantity);
-  res.send(items);
+
+  await addToCart(userId, productId, quantity);
+  const updatedCart = await getCart(userId);
+
+  res.send(updatedCart);
+});
+
+router.delete("/carts/:id", async (req, res) => {
+  try {
+    console.log(req.user);
+    const userId = req.user.id;
+    const productId = req.params.id;
+
+    const deletedItem = await removeFromCart(userId, productId);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
+    const updatedCart = await getCart(userId);
+    res.send(updatedCart);
+  } catch (error) {
+    console.error("Error deleting from cart:", error);
+    res.status(500).json({ message: "Failed to delete item from cart" });
+  }
 });
 
 router.post("/order", async (req, res) => {

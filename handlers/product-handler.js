@@ -9,7 +9,9 @@ async function addProduct(model) {
 }
 
 async function getProducts() {
-  let products = await Product.find();
+  let products = await Product.find()
+    .populate("categoryId")
+    .populate("brandId");
   return products.map((c) => c.toObject());
 }
 

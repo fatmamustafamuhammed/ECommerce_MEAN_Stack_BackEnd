@@ -28,10 +28,13 @@ async function removeFromWhishList(userId, productId) {
 }
 
 async function getWhishList(userId) {
-  let whishLists = await WhishList.find({ userId: userId }).populate(
-    "productId",
-  );
-  return whishLists.map((x) => x.toObject().productId);
+  let whishLists = await WhishList.find({ userId: userId }).populate("productId");
+  
+  return whishLists.map((x) => ({
+    _id: x._id,
+    product: x.productId,
+    quantity: 1
+  }));
 }
 
 export { addToWhishList, removeFromWhishList, getWhishList };
