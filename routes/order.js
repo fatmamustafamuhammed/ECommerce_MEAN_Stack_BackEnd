@@ -4,16 +4,12 @@ const router = express.Router();
 
 router.get("", async (req, res) => {
   try {
-    console.log("Fetching admin orders...");
     const orders = await getAdminOrder();
     console.log("Orders found:", orders.length);
     res.send(orders);
   } catch (error) {
     console.error("Error fetching admin orders:", error);
-    res.status(500).send({
-      message: "Failed to fetch orders",
-      error: error.message,
-    });
+    res.status(500).send({ message: "Failed to fetch orders" });
   }
 });
 
@@ -32,10 +28,7 @@ router.put("/:orderId/status", async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating order status:", error);
-    res.status(500).send({
-      message: "Failed to update order status",
-      error: error.message,
-    });
+    res.status(500).send({ message: "Failed to update order status" });
   }
 });
 

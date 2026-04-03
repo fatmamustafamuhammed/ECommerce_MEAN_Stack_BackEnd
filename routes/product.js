@@ -89,7 +89,7 @@ router.delete("/delete-image/:productId/:imageUrl", async (req, res) => {
 
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
-      console.log(`✅ Deleted file: ${imagePath}`);
+      console.log(`Deleted file: ${imagePath}`);
     }
 
     if (productId && productId !== "temp" && productId !== "undefined") {

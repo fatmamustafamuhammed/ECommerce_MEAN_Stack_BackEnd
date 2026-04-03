@@ -2,6 +2,19 @@ import Order from "./../db/order.js";
 
 async function addOrder(userId, modelOrder) {
   let totalAmount = modelOrder.totalAmount;
+  /**
+      if no totalAmount calculated ==> code will calculate it
+      reduce: It loops through each element in the array and accumulates a specific value (like summing numbers)
+      array.reduce((accumulator, currentItem) => {
+        accumulator = the running total
+        currentItem = each item in the array
+        return accumulator + something;
+      }, startingValue);
+      Step1: (sum = 0,   item = Prod1) ==> price = 100, quantity = 2 ==> return 0 +   (100 × 2)  = 200
+      Step2: (sum = 200, item = Prod2) ==> price = 50,  quantity = 1 ==> return 200 + (50 × 1)   = 250
+      Step3: (sum = 250, item = Prod3) ==> price = 30,  quantity = 3 ==> return 250 + (30 × 3)   = 340
+      FinalResult: totalAmount = 340
+  */
   if (!totalAmount && modelOrder.items) {
     totalAmount = modelOrder.items.reduce((sum, item) => {
       const price = item.product?.price || 0;
@@ -26,7 +39,7 @@ async function getCustomerOrder(userId) {
   return orders.map((x) => x.toObject());
 }
 
-async function getAdminOrder(userId) {
+async function getAdminOrder() {
   let orders = await Order.find();
   return orders.map((x) => x.toObject());
 }

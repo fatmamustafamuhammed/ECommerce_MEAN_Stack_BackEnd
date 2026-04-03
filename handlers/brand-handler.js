@@ -1,9 +1,7 @@
 import Brand from "./../db/brand.js";
 
 async function addBrand(model) {
-  let brand = new Brand({
-    name: model.name,
-  });
+  let brand = new Brand({ name: model.name });
   await brand.save();
   return brand.toObject();
 }

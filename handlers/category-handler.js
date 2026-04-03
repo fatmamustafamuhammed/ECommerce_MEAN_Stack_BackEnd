@@ -1,9 +1,7 @@
 import Category from "./../db/category.js";
 
 async function addCategory(model) {
-  let category = new Category({
-    name: model.name,
-  });
+  let category = new Category({ name: model.name });
   await category.save();
   return category.toObject();
 }

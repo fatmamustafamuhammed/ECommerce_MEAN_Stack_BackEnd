@@ -1,9 +1,8 @@
 import Product from "./../db/product.js";
 import mongoose from "mongoose";
+
 async function addProduct(model) {
-  let product = new Product({
-    ...model,
-  });
+  let product = new Product({ ...model });
   await product.save();
   return product.toObject();
 }
@@ -31,16 +30,12 @@ async function deleteProduct(id) {
 }
 
 async function getNewProducts() {
-  let newProducts = await Product.find({
-    isnew: true,
-  });
+  let newProducts = await Product.find({ isnew: true });
   return newProducts.map((x) => x.toObject());
 }
 
 async function getFeaturedProducts() {
-  let FeaturedProducts = await Product.find({
-    isFeatured: true,
-  });
+  let FeaturedProducts = await Product.find({ isFeatured: true });
   return FeaturedProducts.map((x) => x.toObject());
 }
 
@@ -69,10 +64,7 @@ async function getProductForListing(
   }
   let queryFilter = {};
   if (searchTerm) {
-    // Like Operator in mongodb
-    // ?searchTerm=up
-    // queryFilter.name = { $regex: ".*" + searchTerm + ".*" };
-
+    // Like Operator in mongodb ==> ?searchTerm=up ==> queryFilter.name = { $regex: ".*" + searchTerm + ".*" };
     queryFilter.$or = [
       {
         name: { $regex: ".*" + searchTerm + ".*" },

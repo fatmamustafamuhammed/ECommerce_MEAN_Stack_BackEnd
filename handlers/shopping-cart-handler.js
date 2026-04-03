@@ -1,11 +1,7 @@
 import Cart from "../db/cart.js";
 
 async function addToCart(userId, productId, quantity) {
-  let product = await Cart.findOne({
-    userId: userId,
-    productId: productId,
-  });
-
+  let product = await Cart.findOne({ userId: userId, productId: productId });
   let updatedCart;
 
   if (product) {
@@ -15,9 +11,7 @@ async function addToCart(userId, productId, quantity) {
     } else {
       updatedCart = await Cart.findByIdAndUpdate(
         product._id,
-        {
-          quantity: product.quantity + quantity,
-        },
+        { quantity: product.quantity + quantity },
         { new: true },
       );
     }

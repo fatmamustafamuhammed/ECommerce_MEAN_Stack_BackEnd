@@ -1,19 +1,16 @@
-import WhishList from "./../db/wishList.js";
+import WishList from "./../db/wishList.js";
 
-async function addToWhishList(userId, productId) {
-  const whishList = new WhishList({
-    userId: userId,
-    productId: productId,
-  });
-  await whishList.save();
-  return whishList.toObject();
+async function addToWishList(userId, productId) {
+  const wishList = new WishList({ userId: userId, productId: productId });
+  await wishList.save();
+  return wishList.toObject();
 }
 
-async function removeFromWhishList(userId, productId) {
+async function removeFromWishList(userId, productId) {
   console.log("Removing - userId:", userId);
   console.log("Removing - productId:", productId);
 
-  const result = await WhishList.deleteOne({
+  const result = await WishList.deleteOne({
     userId: userId,
     productId: productId,
   });
@@ -27,14 +24,14 @@ async function removeFromWhishList(userId, productId) {
   return result;
 }
 
-async function getWhishList(userId) {
-  let whishLists = await WhishList.find({ userId: userId }).populate("productId");
-  
-  return whishLists.map((x) => ({
+async function getWishList(userId) {
+  let wishLists = await WishList.find({ userId: userId }).populate("productId");
+
+  return wishLists.map((x) => ({
     _id: x._id,
     product: x.productId,
-    quantity: 1
+    quantity: 1,
   }));
 }
 
-export { addToWhishList, removeFromWhishList, getWhishList };
+export { addToWishList, removeFromWishList, getWishList };

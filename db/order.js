@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
+
 const orderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+  userId: { type: Schema.Types.ObjectId, ref: "users" },
   date: Date,
-  items: Array(mongoose.Schema.Types.Mixed),
+  items: Array(Schema.Types.Mixed),
   paymentType: String,
-  address: mongoose.Schema.Types.Mixed,
+  address: Schema.Types.Mixed,
   status: {
     type: String,
     enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
@@ -12,5 +14,6 @@ const orderSchema = new mongoose.Schema({
   },
   totalAmount: { type: Number, default: 0, required: true },
 });
+
 const Order = mongoose.model("orders", orderSchema);
 export default Order;
