@@ -60,6 +60,8 @@ connectDb().catch((err) => {
   console.error(err);
 });
 
-app.listen(port, () => {
-  console.log("Server is Running on Port", port);
-});
+// app.listen(port, () => {
+//   console.log("Server is Running on Port", port);
+// });
+
+export default app;
