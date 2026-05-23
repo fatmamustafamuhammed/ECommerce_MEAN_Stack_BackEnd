@@ -21,8 +21,7 @@ const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
-    origin: ["https://e-commerce-mean-stack-beta.vercel.app"],
-    credentials: true,
+    origin: ["https://e-commerce-mean-stack-front.vercel.app"],
   }),
 );
 
