@@ -15,15 +15,11 @@ import { fileURLToPath } from "url";
 import { verifyToken, isAdmin } from "./middleware/auth-middleware.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(
-  cors({
-    origin: ["https://e-commerce-mean-stack-front.vercel.app"],
-  }),
-);
+app.use(cors());
 
 app.use(express.json());
 
@@ -60,8 +56,6 @@ connectDb().catch((err) => {
   console.error(err);
 });
 
-// app.listen(port, () => {
-//   console.log("Server is Running on Port", port);
-// });
-
-export default app;
+app.listen(port, () => {
+  console.log("Server is Running on Port", port);
+});
