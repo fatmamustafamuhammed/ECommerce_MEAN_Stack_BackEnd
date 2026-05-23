@@ -15,11 +15,16 @@ import { fileURLToPath } from "url";
 import { verifyToken, isAdmin } from "./middleware/auth-middleware.js";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://e-commerce-mean-stack-beta.vercel.app"],
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
