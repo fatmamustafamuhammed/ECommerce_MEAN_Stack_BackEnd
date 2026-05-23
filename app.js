@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
 import categoryRoutes from "./routes/category.js";
@@ -45,9 +48,7 @@ app.get("/", (req, res) => {
 });
 
 async function connectDb() {
-  await mongoose.connect("mongodb://localhost:27017", {
-    dbName: "e-comm-store-db",
-  });
+  await mongoose.connect(process.env.MONGO_URI);
   console.log("mongodb connected");
 }
 
